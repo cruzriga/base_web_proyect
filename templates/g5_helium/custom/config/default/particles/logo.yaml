@@ -1,0 +1,9 @@
+enabled: '1'
+url: 'http://tokokoecotravel.com/'
+target: _self
+image: 'gantry-media://logo-tokoko.png'
+height: ''
+link: '1'
+svg: ''
+text: ''
+class: 'g-logo g-logo-helium'

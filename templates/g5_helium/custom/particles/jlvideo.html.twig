@@ -1,0 +1,295 @@
+{% extends '@nucleus/partials/particle.html.twig' %}
+
+{% block stylesheets %}
+<style>
+{% if particle.particle_title_color or particle.particle_title_fontsize %}
+#{{ id }}.g5-particle-title { {% if particle.particle_title_color %}color: {{ particle.particle_title_color }};{% endif %}{% if particle.particle_title_fontsize %}font-size: {{particle.particle_title_fontsize}}px;{% endif %} }
+{% endif %}
+#{{id}}.jl-open>.jl-modal-dialog video {vertical-align: middle;}
+</style>
+{% endblock %}
+
+{# Set Viewport Height #}
+{% if particle.viewport_height == 'full' %}
+    {% set viewport_height = 'jl-height-viewport="offset-top: true;"' %}
+{% elseif particle.viewport_height == 'percent' %}
+    {% set viewport_height = 'jl-height-viewport="offset-top: true; offset-bottom: 20;"' %}
+{% elseif particle.viewport_height == 'section' %}
+    {% set viewport_height = 'jl-height-viewport="offset-top: true; offset-bottom: 50;"' %}
+{% elseif particle.viewport_height == 'expand' %}
+    {% set viewport_height = 'jl-height-viewport="expand: true;"' %}
+{% endif %}
+
+{# Set Max-Width Content Section #}
+{% set container_maxwidth = particle.container_maxwidth != 'default' ? 'jl-container jl-container-' ~ particle.container_maxwidth|e ~ '' : 'jl-container' %}
+
+{# Set Padding #}
+{% if particle.padding == 'default' %}
+    {% set padding = ' jl-section' %}
+{% elseif particle.padding == 'none' %}
+    {% set padding = ' jl-section jl-padding-remove-vertical' %}
+{% else %}
+    {% set padding = ' jl-section jl-section-' ~ particle.padding|e ~ '' %}
+{% endif %}
+
+{# Set Background color #}
+{% set parallax_bg_color = particle.parallax_bg_color ? 'style="background-color: ' ~ particle.parallax_bg_color ~ ';"' %}
+{% set parallax_overlay = (particle.parallax_bg_overlay ? '<div class="jl-position-cover" style="background-color: '~ particle.parallax_bg_overlay ~';"></div>') %}
+{% set parallax_easing = particle.parallax_easing ? 'easing:' ~ particle.parallax_easing / 10 ~ '' %}
+
+{# Set Max-Width Content #}
+{% set content_maxwidth %}
+{% if particle.g_maxwidth != 'inherit' %} jl-width-{{particle.g_maxwidth}}{% if particle.g_maxwidth_breakpoint != 'always' %}@{{particle.g_maxwidth_breakpoint}}{% endif %}{% if particle.g_maxwidth_alignment == 'left' %}{% elseif particle.g_maxwidth_alignment == 'center' %} jl-margin-auto{% else %} jl-margin-auto-left{% endif %}{% endif %}
+{% endset %}
+
+{# Set Parallax Background #}
+{% set parallaxbackground %}
+{% if particle.parallax_image %}
+<div data-src="{{ url(particle.parallax_image)|e }}" class="jl-background-norepeat{{ particle.parallax_bg_overlay ? ' jl-position-relative' : '' }}{{padding}} jl-background-{{particle.background_image_position|e}}{% if particle.background_image_size != 'auto' %} jl-background-{{particle.background_image_size|e}}{% endif %}{% if particle.parallax_bg_visibility != 'always' %} jl-background-image@{{particle.parallax_bg_visibility|e}}{% endif %}{% if particle.vertical_alignment != 'none' %} jl-flex jl-flex-{{particle.vertical_alignment|e}}{% endif %}{% if particle.parallax_text_color != 'default' %} jl-{{particle.parallax_text_color|e}}{% endif %}{% if particle.blendmode != 'inherit' %} jl-background-blend-{{particle.blendmode|e}}{% endif %}" {{parallax_bg_color|default('')|raw}}{% if particle.horizontal_start or particle.horizontal_end or particle.vertical_start or particle.vertical_end or particle.parallax_easing %} jl-parallax="{% if particle.horizontal_start or particle.horizontal_end %}bgx: {{particle.horizontal_start|e}},{{particle.horizontal_end|e}};{% endif %}{% if particle.vertical_start or particle.vertical_end %}bgy: {{particle.vertical_start|e}},{{particle.vertical_end|e}};{% endif %}{% if particle.parallax_bg_breakpoint != 'always' %} media: @{{particle.parallax_bg_breakpoint|e}};{% endif %}{{parallax_easing}}" {% endif %} jl-img {{viewport_height|raw}}>
+{{parallax_overlay|raw}}
+{% if particle.container_maxwidth != 'none' %}
+<div class="{{container_maxwidth}}">
+{% endif %}
+{% endif %}
+{% endset %}
+
+{# End Parallax Background #}
+{% set endparallaxbackground %}
+{% if particle.parallax_image %}
+{% if particle.container_maxwidth != 'none' %}
+</div>
+{% endif %}
+</div>
+{% endif %}
+{% endset %}
+
+{# Set Horizontal #}
+{% set pahorizontal %}
+{% if particle.pa_horizontal_start or particle.pa_horizontal_end %}x: {% if particle.pa_horizontal_start == '' %}0{% else %}{{particle.pa_horizontal_start }}{% endif %},{% if particle.pa_horizontal_end == '' %}0{% else %}{{particle.pa_horizontal_end }}{% endif %};{% endif %}
+{% endset %}
+
+{# Set Vertical #}
+{% set pavertical %}
+{% if particle.pa_vertical_start or particle.pa_vertical_end %}y: {% if particle.pa_vertical_start == '' %}0{% else %}{{particle.pa_vertical_start }}{% endif %},{% if particle.pa_vertical_end == '' %}0{% else %}{{particle.pa_vertical_end }}{% endif %};{% endif %}
+{% endset %}
+
+{# Set Scale #}
+{% set scale %}
+{% if particle.scale_start or particle.scale_end %}scale: {% if particle.scale_start == '' %}1{% else %}{{particle.scale_start / 100 }}{% endif %},{% if particle.scale_end == '' %}1{% else %} {{particle.scale_end / 100 }}{% endif %};{% endif %}
+{% endset %}
+
+{# Set Rotate #}
+{% set rotate %}{% if particle.rotate_start or particle.rotate_end %}
+rotate: {% if particle.rotate_start == '' %}0{% else %}{{particle.rotate_start}}{% endif %},{% if particle.rotate_end == '' %}0{% else %}{{particle.rotate_end}}{% endif %};{% endif %}
+{% endset %}
+
+{# Set Opacity #}
+{% set opacity %}
+{% if particle.opacity_start or particle.opacity_end %}opacity: {% if particle.opacity_start == '' %}1{% else %}{{particle.opacity_start / 100 }}{% endif %},{% if particle.opacity_end == '' %}1{% else %}{{particle.opacity_end / 100 }}{% endif %};{% endif %}
+{% endset %}
+
+{# Set Animation #}
+{% set animation %}
+{% if particle.animation != 'inherit' and particle.animation != 'parallax' %} jl-scrollspy="cls: jl-animation-{{particle.animation|e}};{% if particle.animation_repeat == 'enabled' %} repeat: true;{% endif %}{% if particle.animation_delay %} delay: {{particle.animation_delay|e}};{% endif %}"
+{% elseif particle.animation == 'parallax' %}
+{% if particle.pa_horizontal_start or particle.pa_horizontal_end or particle.pa_vertical_start or particle.pa_vertical_end or particle.scale_start or particle.scale_end or particle.rotate_start or particle.rotate_end or particle.opacity_start or particle.opacity_end or particle.easing or particle.pa_viewport or particle.pa_breakpoint %} jl-parallax="{{pahorizontal}}{{pavertical}}{{scale}}{{rotate}}{{opacity}}{% if particle.easing == '' %}{% else %}easing: {{ particle.easing / 100 }};{% endif %}{% if particle.pa_viewport != '' %}viewport:{{ particle.pa_viewport / 100 }};{% endif %}{% if particle.pa_breakpoint != 'always' %}media: @{{particle.pa_breakpoint|e}}{% endif %}"{% endif %}
+{% endif %}
+{% endset %}
+
+{# Set Particle Alignment #}
+{% set particle_alignment %}
+{% if particle.align != 'inherit' %} jl-text-{{particle.align|e}}{% if particle.breakpoint != 'always' %}@{{particle.breakpoint|e}}{% endif %}{% endif %}{% if particle.align != 'inherit' and particle.breakpoint != 'always' %}{% if particle.fallback != 'inherit' %} jl-text-{{particle.fallback|e}}{% endif %}{% endif %}
+{% endset %}
+
+{# set Particle Title Style #}
+{% set particle_title_style %}
+{% if particle.particle_title %}
+<{{particle.particle_title_element|e}} id="{{ id }}" class="g5-particle-title{% if particle.particle_title_align != 'inherit' %} jl-text-{{particle.particle_title_align|e}}{% endif %}{% if particle.particle_predefined_color != 'default' %} jl-text-{{particle.particle_predefined_color|e}}{% endif %}{% if particle.particle_title_style != 'default' %} jl-{{particle.particle_title_style|e}}{% endif %}{% if particle.particle_title_decoration != 'none' %} jl-heading-{{particle.particle_title_decoration|e}}{% endif %}">
+{% if particle.particle_title_decoration == 'line' %} <span>{{particle.particle_title|raw}}</span>
+{% else %} {{particle.particle_title|raw}}
+{% endif %}
+</{{particle.particle_title_element|e}}>
+{% endif %}
+{% endset %}
+
+{% set image_width = particle.image_width ? ' width="' ~ particle.image_width ~ '"' %}
+{% set image_height = particle.image_height ? ' height="' ~ particle.image_height ~ '"' %}
+
+{% set video_width = particle.video_frame_width ? ' width="' ~ particle.video_frame_width ~ '"' %}
+{% set video_height = particle.video_frame_height ? ' height="' ~ particle.video_frame_height ~ '"' %}
+
+{% if particle.source == 'youtube' %}
+{% set video_width = particle.video_frame_height and particle.video_frame_width is empty ? ' width="' ~ particle.video_frame_height * 16 // 9 ~ '"' : video_width %}
+{% set video_height = particle.video_frame_width and particle.video_frame_height is empty ? ' height="' ~ particle.video_frame_width * 9 // 16 ~ '"' : video_height %}
+{% endif %}
+
+{% set controls = particle.controls == 'enabled' ? ' controls' %}
+{% set loop = particle.loop == 'enabled' ? ' loop' %}
+{% set muted = particle.muted == 'enabled' ? ' muted' %}
+{% set play_inline = particle.play_inline == 'enabled' ? ' playsinline' %}
+{% set lazy_video = particle.lazy_video == 'enabled' ? ' preload="none"' %}
+
+{% if particle.autoplay != 'off' %}
+{% set video_autoplay = particle.autoplay == 'true' ? ' autoplay' : ' jl-video="autoplay: inview"' %}
+{% endif %}
+
+{% set image_border_cls = particle.border != 'none' ? ' jl-border-' ~ particle.border|e ~ '' %}
+
+{# Image Box Shadow #}
+{% set img_box_shadow = particle.box_shadow != 'none' ? ' jl-box-shadow-' ~ particle.box_shadow|e ~ '' %}
+{% set img_box_shadow_hover = particle.box_shadow_hover != 'none' ? ' jl-box-shadow-hover-' ~ particle.box_shadow_hover|e ~ '' %}
+
+{# Video Box Shadow #}
+{% set video_boxshadow = particle.video_box_shadow != 'none' ? 'jl-box-shadow-' ~ particle.video_box_shadow|e ~ '' %}
+
+{# Image Transition #}
+{% set image_transition = particle.image_transition != 'none' ? ' jl-transition-' ~ particle.image_transition|e ~ ' jl-transition-opaque' %}
+
+{% set transition_attr = particle.image_transition != 'none' ? ' tabindex="0"' %}
+{% set transition_cls = particle.image_transition != 'none' and particle.link_frame ? ' jl-transition-toggle' %}
+{% set image_transition_cls = particle.image_transition != 'none' and particle.link_frame == false ? ' jl-transition-toggle' %}
+
+{# Set Visibility #}
+{% if particle.visibility != 'inherit' %}
+{% set visibility = particle.visibility in ['s', 'm', 'l', 'xl'] ? ' jl-visible@' ~ particle.visibility|e : ' jl-' ~ particle.visibility|replace({'-': '@'}) ~ '' %}
+{% endif %}
+
+{# Set Margin #}
+{% if particle.margin != 'inherit' %}
+{% set margin = particle.margin != 'default' ? ' jl-margin-' ~ particle.margin|e : ' jl-margin' %}
+{% endif %}
+
+{# Set Link Frame html element #}
+{% set link_frame_element = particle.link_frame ? 'a' : 'div' %}
+
+{% block particle %}
+{% if particle.enabled %}
+{{parallaxbackground}}
+{{particle_title_style}}
+
+<div id="{{ id }}" class="{{ id ~ content_maxwidth ~ particle_alignment ~ visibility ~ margin }}{% if particle.class %} {{ particle.class }}{% endif %}"{% if particle.popup_type == 'lightbox' %} jl-lightbox="toggle: a[data-type]"{% endif %}{{animation}}>
+
+{% if particle.source == 'vimeo' and particle.posterimage %}
+
+<{{link_frame_element|raw}}{{ particle.link_frame and particle.popup_type == 'lightbox' ? ' data-type' : '' }} class="tm-video-item jl-inline-clip{{ particle.link_frame ? ' jl-link-toggle' : '' }}{{ image_border_cls ~ img_box_shadow ~ img_box_shadow_hover ~ transition_cls }}"{% if particle.link_frame %}{% if particle.popup_type == 'modal' %} href="#{{id}}" jl-toggle{% else %} href="https://vimeo.com/{{ particle.video|replace({'https://player.vimeo.com/video/': '', 'https://vimeo.com/ondemand/': '', 'https://vimeo.com/channels/staffpicks/': '', 'https://player.vimeo.com/video/':''}) }}{% if particle.autoplay != 'off' %}?autoplay=1&muted=1{% endif %}" frameborder="0" allowfullscreen jl-responsive{{video_autoplay|raw}}{% endif %}{{transition_attr|raw}}{% endif %}>
+
+<img{{image_width|raw}}{{image_height|raw}} src="{{ url(particle.posterimage)|e }}" class="tm-image{{image_transition}}">
+<div class="{% if particle.overlay_style != 'none' %}{{particle.overlay_style|e}}{% endif %} jl-position-cover"></div>  
+
+<div class="jl-position-center">
+    <div class="jl-overlay jl-margin-remove-first-child">
+        <div class="tm-video-player">
+            <div class="btn-video-wrap">
+        {% if particle.link_frame %}
+                <span class="btn-video jl-icon-button"><i class="fa fa-play" aria-hidden="true"></i></span>
+        {% else %}
+            {% if particle.popup_type == 'modal' %}
+                <a class="btn-video jl-icon-button" href="#{{id}}" jl-toggle><i class="fa fa-play" aria-hidden="true"></i></a>
+                {% else %}
+                <a data-type class="btn-video jl-icon-button" href="https://vimeo.com/{{ particle.video|replace({'https://player.vimeo.com/video/': '', 'https://vimeo.com/ondemand/': '', 'https://vimeo.com/channels/staffpicks/': '', 'https://player.vimeo.com/video/':''}) }}{% if particle.autoplay != 'off' %}?autoplay=1&muted=1{% endif %}" frameborder="0" allowfullscreen jl-responsive{{video_autoplay|raw}}><i class="fa fa-play" aria-hidden="true"></i></a>
+                {% endif %}
+        {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if particle.popup_type == 'modal' %}
+<div id="{{id}}" class="jl-flex-top" jl-modal>
+    <div class="jl-modal-dialog jl-width-auto{% if particle.centermodal %} jl-margin-auto-vertical{% endif %}">
+        <button class="jl-modal-close-{{particle.close}}" type="button" jl-close></button>
+        <iframe class="{{video_boxshadow}}"{{video_width|raw}}{{video_height|raw}} src="https://player.vimeo.com/video/{{ particle.video|replace({'https://vimeo.com/': '', 'https://vimeo.com/ondemand/': '', 'https://vimeo.com/channels/staffpicks/': '', 'https://player.vimeo.com/video/':''}) }}{% if particle.autoplay != 'off' %}?autoplay=1&muted=1{% endif %}" frameborder="0" allowfullscreen jl-responsive{{video_autoplay|raw}}></iframe>
+    </div>
+</div>
+{% endif %}
+
+</{{link_frame_element|raw}}>
+
+{% elseif particle.source == 'vimeo' %}
+<iframe class="{{video_boxshadow}}"{{video_width|raw}}{{video_height|raw}} src="https://player.vimeo.com/video/{{ particle.video|replace({'https://vimeo.com/': '', 'https://vimeo.com/ondemand/': '', 'https://vimeo.com/channels/staffpicks/': '', 'https://player.vimeo.com/video/':''}) }}{% if particle.autoplay != 'off' %}?autoplay=1&muted=1{% endif %}" frameborder="0" allowfullscreen jl-responsive{{video_autoplay|raw}}></iframe>
+{% endif %}
+
+{% if particle.source == 'youtube' and particle.posterimage %}
+
+<{{link_frame_element|raw}}{{ particle.link_frame and particle.popup_type == 'lightbox' ? ' data-type' : '' }} class="tm-video-item jl-inline-clip{{ particle.link_frame ? ' jl-link-toggle' : '' }}{{ image_border_cls ~ img_box_shadow ~ img_box_shadow_hover ~ transition_cls }}"{% if particle.link_frame %}{% if particle.popup_type == 'modal' %} href="#{{id}}" jl-toggle{% else %} href="https://www.youtube.com/watch?v={{ particle.video|replace({'https://www.youtube.com/watch?v=': '', 'https://www.youtube.com/embed': '', 'https://youtu.be/': '', 'http://youtu.be/': ''}) }}{% if particle.autoplay != 'off' %}?rel=0;&autoplay=1&mute=1{% endif %}"{% endif %}{{transition_attr|raw}}{% endif %}>
+
+<img{{image_width|raw}}{{image_height|raw}} src="{{ url(particle.posterimage)|e }}" class="tm-image{{image_transition}}">
+<div class="{% if particle.overlay_style != 'none' %}{{particle.overlay_style|e}}{% endif %} jl-position-cover"></div>  
+
+<div class="jl-position-center">
+    <div class="jl-overlay jl-margin-remove-first-child">
+        <div class="tm-video-player">
+            <div class="btn-video-wrap">
+        {% if particle.link_frame %}
+                <span class="btn-video jl-icon-button"><i class="fa fa-play" aria-hidden="true"></i></span>
+        {% else %}
+            {% if particle.popup_type == 'modal' %}
+                <a class="btn-video jl-icon-button" href="#{{id}}" jl-toggle><i class="fa fa-play" aria-hidden="true"></i></a>
+                {% else %}
+                <a data-type class="btn-video jl-icon-button" href="https://www.youtube.com/watch?v={{ particle.video|replace({'https://www.youtube.com/watch?v=': '', 'https://www.youtube.com/embed': '', 'https://youtu.be/': '', 'http://youtu.be/': ''}) }}{% if particle.autoplay != 'off' %}?rel=0;&autoplay=1&mute=1{% endif %}"><i class="fa fa-play" aria-hidden="true"></i></a>
+                {% endif %}
+        {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if particle.popup_type == 'modal' %}
+<div id="{{id}}" class="jl-flex-top" jl-modal>
+    <div class="jl-modal-dialog jl-width-auto{% if particle.centermodal %} jl-margin-auto-vertical{% endif %}">
+        <button class="jl-modal-close-{{particle.close}}" type="button" jl-close></button>
+        <iframe{{video_width|raw}}{{video_height|raw}} src="https://www.youtube.com/embed/{{ particle.video|replace({'https://www.youtube.com/watch?v=': '', 'http://www.youtube.com/watch?v=' : '', 'https://youtu.be/': '', 'http://youtu.be/': '', 'https://www.youtube.com/watch?time_continue=3&v=': ''}) }}{% if particle.autoplay != 'off' %}?rel=0;&autoplay=1&mute=1{% endif %}" frameborder="0" allowfullscreen jl-responsive{{muted}}{{video_autoplay|raw}} jl-video></iframe>
+    </div>
+</div>
+{% endif %}
+
+</{{link_frame_element|raw}}>
+
+{% elseif particle.source == 'youtube' %}
+<iframe{{video_width|raw}}{{video_height|raw}} class="{{video_boxshadow}}" src="https://www.youtube.com/embed/{{ particle.video|replace({'https://www.youtube.com/watch?v=': '', 'http://www.youtube.com/watch?v=' : '', 'https://youtu.be/': '', 'http://youtu.be/': '', 'https://www.youtube.com/watch?time_continue=3&v=': '', 'https://www.youtube-nocookie.com/embed/': ''}) }}{% if particle.autoplay != 'off' %}?rel=0;&autoplay=1&mute=1{% endif %}" frameborder="0" allowfullscreen jl-responsive{{muted}}{{video_autoplay|raw}}></iframe>
+{% endif %}
+
+{% if particle.source == 'local' and particle.posterimage %}
+
+<{{link_frame_element|raw}}{{ particle.link_frame and particle.popup_type == 'lightbox' ? ' data-type' : '' }} class="tm-video-item jl-inline-clip{{ particle.link_frame ? ' jl-link-toggle' : '' }}{{ image_border_cls ~ img_box_shadow ~ img_box_shadow_hover ~ transition_cls }}"{% if particle.link_frame %}{% if particle.popup_type == 'modal' %} href="#{{id}}" jl-toggle{% else %} href="{{ url(particle.local_video)|e }}"{% endif %}{{transition_attr|raw}}{% endif %}>
+
+<img{{image_width|raw}}{{image_height|raw}} src="{{ url(particle.posterimage)|e }}" class="tm-image{{image_transition}}">
+<div class="{% if particle.overlay_style != 'none' %}{{particle.overlay_style|e}}{% endif %} jl-position-cover"></div>  
+
+<div class="jl-position-center">
+    <div class="jl-overlay jl-margin-remove-first-child">
+        <div class="tm-video-player">
+            <div class="btn-video-wrap">
+        {% if particle.link_frame %}
+                <span class="btn-video jl-icon-button"><i class="fa fa-play" aria-hidden="true"></i></span>
+        {% else %}
+            {% if particle.popup_type == 'modal' %}
+                <a class="btn-video jl-icon-button" href="#{{id}}" jl-toggle><i class="fa fa-play" aria-hidden="true"></i></a>
+                {% else %}
+                <a data-type class="btn-video jl-icon-button" href="https://www.youtube.com/watch?v={{ particle.video|replace({'https://www.youtube.com/watch?v=': '', 'https://www.youtube.com/embed': '', 'https://youtu.be/': '', 'http://youtu.be/': ''}) }}{% if particle.autoplay != 'off' %}?rel=0;&autoplay=1&mute=1{% endif %}"><i class="fa fa-play" aria-hidden="true"></i></a>
+                {% endif %}
+        {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if particle.popup_type == 'modal' %}
+<div id="{{id}}" class="jl-flex-top" jl-modal>
+    <div class="jl-modal-dialog jl-width-auto{% if particle.centermodal %} jl-margin-auto-vertical{% endif %}">
+        <button class="jl-modal-close-{{particle.close}}" type="button" jl-close></button>
+        <video{{video_width|raw}}{{video_height|raw}} src="{{ url(particle.local_video)|e }}"{{ controls ~ loop ~ muted ~ play_inline }}{{lazy_video|raw}}{{video_autoplay|raw}}></video>
+    </div>
+</div>
+{% endif %}
+
+</{{link_frame_element|raw}}>
+
+{% elseif particle.source == 'local' %}
+<video{{video_width|raw}}{{video_height|raw}} src="{{ url(particle.local_video)|e }}"{{ controls ~ loop ~ muted ~ play_inline }}{{lazy_video|raw}}{{video_autoplay|raw}}></video>
+{% endif %}
+
+</div>
+{{endparallaxbackground}}
+{% endif %}
+{% endblock %}

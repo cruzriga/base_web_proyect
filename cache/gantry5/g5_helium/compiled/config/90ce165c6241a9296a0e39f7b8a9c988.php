@@ -1,0 +1,236 @@
+<?php
+return [
+    '@class' => 'Gantry\\Component\\Config\\CompiledConfig',
+    'timestamp' => 1607921202,
+    'checksum' => 'f30e2b7e351e6bb5f7aaf4e9bd8f653b',
+    'files' => [
+        'templates/g5_helium/custom/config/14' => [
+            'index' => [
+                'file' => 'templates/g5_helium/custom/config/14/index.yaml',
+                'modified' => 1607921178
+            ],
+            'layout' => [
+                'file' => 'templates/g5_helium/custom/config/14/layout.yaml',
+                'modified' => 1607921178
+            ]
+        ]
+    ],
+    'data' => [
+        'index' => [
+            
+        ],
+        'layout' => [
+            'version' => 2,
+            'preset' => [
+                'image' => 'gantry-admin://images/layouts/default.png',
+                'name' => 'default',
+                'timestamp' => 1605151307
+            ],
+            'layout' => [
+                'navigation' => [
+                    
+                ],
+                'header' => [
+                    
+                ],
+                'intro' => [
+                    
+                ],
+                'features' => [
+                    
+                ],
+                'utility' => [
+                    
+                ],
+                'above' => [
+                    
+                ],
+                'testimonials' => [
+                    
+                ],
+                'expanded' => [
+                    
+                ],
+                '/container-main/' => [
+                    0 => [
+                        0 => [
+                            'aside 25' => [
+                                
+                            ]
+                        ],
+                        1 => [
+                            'mainbar 50' => [
+                                
+                            ]
+                        ],
+                        2 => [
+                            'sidebar 25' => [
+                                
+                            ]
+                        ]
+                    ]
+                ],
+                'footer' => [
+                    
+                ],
+                'offcanvas' => [
+                    
+                ]
+            ],
+            'structure' => [
+                'navigation' => [
+                    'type' => 'section',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'header' => [
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'intro' => [
+                    'type' => 'section',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'features' => [
+                    'type' => 'section',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'utility' => [
+                    'type' => 'section',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'above' => [
+                    'type' => 'section',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'testimonials' => [
+                    'type' => 'section',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'expanded' => [
+                    'type' => 'section',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'aside' => [
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ],
+                    'block' => [
+                        'fixed' => '1'
+                    ]
+                ],
+                'mainbar' => [
+                    'type' => 'section',
+                    'subtype' => 'main',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'sidebar' => [
+                    'type' => 'section',
+                    'subtype' => 'aside',
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ],
+                    'block' => [
+                        'fixed' => '1'
+                    ]
+                ],
+                'container-main' => [
+                    'attributes' => [
+                        'boxed' => ''
+                    ]
+                ],
+                'footer' => [
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ],
+                'offcanvas' => [
+                    'inherit' => [
+                        'outline' => 'default',
+                        'include' => [
+                            0 => 'attributes',
+                            1 => 'block',
+                            2 => 'children'
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+];

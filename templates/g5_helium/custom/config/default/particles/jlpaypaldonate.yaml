@@ -1,0 +1,7 @@
+enabled: '1'
+currency: USD
+donate_button: 'Donate Now'
+buttonclass: default
+form_style: default
+button_size: default
+button_left: '0'

@@ -1,0 +1,203 @@
+//Block Reveal
+.block-revealer__element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  pointer-events: none;
+  opacity: 0;
+}
+
+// Unset Theme list style 
+address, dl, fieldset, figure, ol, p, pre, ul.jl-list {
+  margin: 0 0 20px 0;
+}
+
+// Set default hr style
+.jl-hr, hr {
+  overflow: visible;
+  text-align: inherit;
+  margin: 0 0 20px 0;
+  border: 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+// Override Uikit Primary Color with Theme Accent Color
+
+.jl-link {
+  color: $accent-color-1;
+  &:hover,
+  &:focus,
+  &:active {
+    color: darken($accent-color-1, 10%);
+  }
+}
+
+a.jl-link-heading:hover,
+.jl-link-heading a:hover,
+.jl-link-toggle:hover .jl-link-heading,
+.jl-link-toggle:focus .jl-link-heading,
+.jl-button-link,
+.jl-alert-primary,
+.jl-nav-default > li > a:hover,
+.jl-nav-default > li > a:focus,
+.jl-nav-default > li.jl-active > a,
+.jl-nav-default .jl-nav-sub a:hover,
+.jl-nav-default .jl-nav-sub a:focus,
+.jl-nav-default .jl-nav-sub li.jl-active > a,
+.jl-nav-primary > li > a:hover,
+.jl-nav-primary > li > a:focus,
+.jl-nav-primary > li.jl-active > a,
+.jl-nav-primary .jl-nav-sub a:hover,
+.jl-nav-primary .jl-nav-sub a:focus,
+.jl-nav-primary .jl-nav-sub li.jl-active > a,
+.jl-subnav > * > a:hover,
+.jl-subnav > * > a:focus,
+.jl-subnav > .jl-active > a {
+  color: $accent-color-1;
+}
+.jl-list-primary > ::before {
+  color: $accent-color-1 !important;
+}
+
+.jl-input:focus,
+.jl-select:focus,
+.jl-textarea:focus,
+.jl-radio:focus,
+.jl-checkbox:focus,
+.jl-tab > .jl-active > a {
+  border-color: $accent-color-1;
+}
+
+.jl-radio:checked,
+.jl-checkbox:checked,
+.jl-checkbox:indeterminate,
+.jl-button-primary,
+.jl-card-primary.jl-card-hover:hover {
+  background-color: $accent-color-1;
+}
+
+.jl-button-primary:hover,
+.jl-button-primary:focus {
+  background-color: darken($accent-color-1, 10%);
+}
+
+.jl-section-primary,
+.jl-tile-primary,
+.jl-card-primary,
+.jl-badge,
+.jl-label {
+  background: $accent-color-1;
+}
+.jl-notification-message-primary,
+.jl-subnav-pill > .jl-active > a {
+  background-color: $accent-color-1;
+}
+/* Active */
+.jl-subnav-pill > .jl-active > a {
+  color: #FFF;
+}
+.jl-text-primary,
+.jl-text-background {
+  color: $accent-color-1 !important;
+}
+@supports (-webkit-background-clip: text) {
+  .jl-text-background {
+    background-color: $accent-color-1;
+  }
+}
+.jl-background-primary {
+  background-color: $accent-color-1;
+}
+
+.jl-overlay-primary {
+  background: fade-out($accent-color-1, 20%);
+}
+
+.jl-accordion-title:hover,
+.jl-accordion-title:focus {
+  color: $accent-color-1;
+}
+.jl-button-default {
+  background-color: rgba(255, 255, 255, 0);
+  color: $accent-color-1;
+  border-color: $accent-color-1;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $accent-color-1;
+    border-color: $accent-color-1;
+    color: #ffffff;
+  }
+}
+.jl-card-primary > .tm-timeline-arrow {
+  background-color: $accent-color-1;
+}
+
+// Joomla Override login form (remove if not needed)
+#jl-login-form,
+.tm-form-reset,
+.tm-form-remind,
+.tm-form-login,
+.tm-form-registration,
+.tm-form-profile-edit {
+  input {
+    box-sizing: inherit;
+    box-shadow: none;
+    border-radius: 0;
+    height: 40px;
+  }
+  .jl-form-icon {
+    height: 40px;
+  }
+  .jl-checkbox {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    margin: 0;
+  }
+}
+.tm-form-reset,
+.tm-form-remind,
+.tm-form-login,
+.tm-form-registration,
+.tm-form-profile-edit {
+  input {
+    width: 100%;
+  }
+}
+.profile {
+  #users-profile-core,
+  #users-profile-custom {
+    .jl-description-list {
+      dd {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+//Tags
+.tm-tags {
+  a {
+    text-transform: none;
+    &:hover,
+    &:focus {
+      color: #ffffff;
+    }
+  }
+}
+
+.jl-popup-login {
+  .jl-list {
+    width: 300px;
+    margin: 0 auto;
+  }
+  li {
+    display: inline-block;
+  }
+}
+
+
